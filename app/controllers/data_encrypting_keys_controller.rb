@@ -1,0 +1,2 @@
+class DataEncryptingKeysController < ApplicationController
+end
