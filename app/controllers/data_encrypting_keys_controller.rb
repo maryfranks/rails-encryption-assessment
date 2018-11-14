@@ -3,9 +3,7 @@ class DataEncryptingKeysController < ApplicationController
   def rotate
     # create background worker to rotate keys and re-encrypt strings
     # 1. check if it's already working
-    # if DataEncryptingKey.where(primary: true) == 1
-      @old_encrypting_key = DataEncryptingKey.primary
-    # end
+    @old_encrypting_key = DataEncryptingKey.primary
     @data_encrypting_key = DataEncryptingKey.new(key: params[:data_encrypting_key], primary: true)
     if @data_encrypting_key.save
       @old_encrypting_key.primary = false

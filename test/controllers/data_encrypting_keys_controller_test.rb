@@ -26,7 +26,9 @@ class DataEncryptingKeysControllerTest < ActionController::TestCase
   end
 
   test "GET #status renders a json object" do
-    assert true
+    get :status
+    json = JSON.parse(response.body)
+    assert_equal "this is a status", json["message"]
   end
 
 end
