@@ -1,17 +1,13 @@
 require 'test_helper'
 
 class DataEncryptingKeysControllerTest < ActionController::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+
   setup do
     @datakey = DataEncryptingKey.new(key: "hello I'm a string", primary: true)
     @datakey.save
   end
 
-
   test "POST #rotate saves new DataEncryptingKey" do
-
     assert_difference "DataEncryptingKey.count" do
       post :rotate, data_encrypting_key: {key: "this is a really really long string"}
     end
