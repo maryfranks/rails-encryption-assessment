@@ -6,7 +6,11 @@ class DataEncryptingKeysControllerTest < ActionController::TestCase
   # end
 
   test "POST #rotate saves new DataEncryptingKey" do
-    assert true
+    assert_difference "DataEncryptingKey.count" do
+      post :rotate, data_encrypting_key: {key: "this is a really really long string"}
+    end
+
+    # assert_response :success
   end
 
   test "POST #rotate sets old keys primary = false" do
