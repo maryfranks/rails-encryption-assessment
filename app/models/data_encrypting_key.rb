@@ -5,9 +5,9 @@ class DataEncryptingKey < ActiveRecord::Base
 
   validates :key, presence: true
 
-  def remove_primary
-    self.update_attribute(:primary, false)
-  end
+  # def remove_primary
+  #   self.update_attribute(:primary, false)
+  # end
 
   def self.is_primary?
     find_by(primary: true)

@@ -1,7 +1,9 @@
 class ReencryptStringsWorker
   include Sidekiq::Worker
+  include DataEncryptingKeyUtil
 
   def perform(encrypted_strings, old_key, new_key)
+    remove_primary(old_key)
     encrypted_strings.each do | string |
       puts string
       puts old_key
