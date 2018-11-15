@@ -1,19 +1,19 @@
 class DataEncryptingKeysController < ApplicationController
 
   def rotate
-    # create background worker to rotate keys and re-encrypt strings
-    # 1. check if it's already working
     @old_encrypting_key = DataEncryptingKey.is_primary?
     @data_encrypting_key = DataEncryptingKey.new(key: params[:data_encrypting_key], primary: true)
+
     if @data_encrypting_key.save
       @old_encrypting_key.remove_primary
       @encrypted_strings = EncryptedString.all.map { |string| string.encrypted_value }
-      ReencryptStringsWorker.perform_async(@encrypted_strings, @old_encrypting_key.encrypted_key)
-      render json: { key: @data_encrypting_key.key, primary: @data_encrypting_key.primary, old_key: @old_encrypting_key.primary, count: DataEncryptingKey.all.count }
+      # check to see if a background job is already running
+      ReencryptStringsWorker.perform_async(@encrypted_strings, @old_encrypting_key, @data_encrypting_key)
+      render json: { message: "keys rotated" }
     else
       render json: { message: @data_encrypting_key.errors.full_messages.to_sentence}
     end
-    # once the job is done and successful, delete the old key
+
   end
 
   def status
