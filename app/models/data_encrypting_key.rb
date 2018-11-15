@@ -5,7 +5,9 @@ class DataEncryptingKey < ActiveRecord::Base
 
   validates :key, presence: true
 
-  def self.primary
+
+
+  def self.is_primary?
     find_by(primary: true)
   end
 
@@ -17,4 +19,3 @@ class DataEncryptingKey < ActiveRecord::Base
     ENV['KEY_ENCRYPTING_KEY']
   end
 end
-

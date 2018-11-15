@@ -12,14 +12,14 @@ class EncryptedString < ActiveRecord::Base
   before_validation :set_token, :set_data_encrypting_key
 
   def assign_data_encryption_key
-    self.data_encrypting_key ||= DataEncryptingKey.primary
+    self.data_encrypting_key ||= DataEncryptingKey.is_primary?
     data_encrypting_key.encrypted_key
   end
 
   private
 
   def encryption_key
-    self.data_encrypting_key ||= DataEncryptingKey.primary
+    self.data_encrypting_key ||= DataEncryptingKey.is_primary?
     data_encrypting_key.key
   end
 
@@ -30,6 +30,6 @@ class EncryptedString < ActiveRecord::Base
   end
 
   def set_data_encrypting_key
-    self.data_encrypting_key ||= DataEncryptingKey.primary
+    self.data_encrypting_key ||= DataEncryptingKey.is_primary?
   end
 end
