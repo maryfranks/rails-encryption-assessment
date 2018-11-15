@@ -1,4 +1,5 @@
 class DataEncryptingKeysController < ApplicationController
+  include DataEncryptingKeyUtil
 
   def rotate
     @old_encrypting_key = DataEncryptingKey.is_primary?
